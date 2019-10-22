@@ -1,0 +1,45 @@
+#!/bin/sh
+set -e
+
+if [ -z "${NGINX_SERVER_NAME}" ]; then
+		export NGINX_SERVER_NAME="default_server"
+fi
+
+if [ -z "${NGINX_DOCUMENT_ROOT}" ]; then
+		export NGINX_DOCUMENT_ROOT="/usr/share/nginx/html"
+fi
+
+if [ -z "${NGINX_BACKEND_PORT}" ]; then
+		export NGINX_BACKEND_PORT=9000
+fi
+
+if [ -z "${NGINX_BACKEND_LISTEN}" ]; then
+		export NGINX_BACKEND_LISTEN=80
+fi
+
+if [ -z "${MAGE_DEBUG_SHOW_ARGS}" ]; then
+		export MAGE_DEBUG_SHOW_ARGS=0
+fi
+
+if [ -z "${MAGE_RUN_CODE}" ]; then
+		export MAGE_RUN_CODE=""
+fi
+
+if [ -z "${MAGE_RUN_TYPE}" ]; then
+		export MAGE_RUN_TYPE=""
+fi
+
+if [ -z "${MAGE_MODE}" ]; then
+		export MAGE_MODE="default"
+fi
+
+envsubst '${NGINX_SERVER_NAME} ${NGINX_DOCUMENT_ROOT} ${NGINX_BACKEND_LISTEN}' \
+	< /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+
+envsubst '${NGINX_BACKEND_HOST} ${NGINX_BACKEND_PORT}' < /etc/nginx/conf.d/upstream.conf.template \
+	> /etc/nginx/conf.d/upstream.conf
+
+envsubst '${MAGE_RUN_CODE} ${MAGE_RUN_TYPE} ${MAGE_MODE} ${MAGE_DEBUG_SHOW_ARGS}' \
+	< /etc/nginx/shared/php-fpm.conf.template > /etc/nginx/shared/php-fpm.conf
+
+exec "nginx" -g "daemon off;"

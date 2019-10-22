@@ -1,0 +1,30 @@
+try_files $uri =404;
+
+# server_name is read-only, so we need a temp var
+set $my_server_name $server_name;
+if ($my_server_name = "") {
+    set $my_server_name $http_host;
+}
+
+fastcgi_buffers 1024 4k;
+fastcgi_read_timeout 600s;
+fastcgi_connect_timeout 600s;
+
+fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+fastcgi_index index.php;
+
+# proxy all requests for dynamic content to
+fastcgi_pass fastcgi_backend; # backend configured in upstream.conf
+
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+fastcgi_param HTTP_AUTHORIZATION $http_authorization;
+fastcgi_param PATH_INFO $fastcgi_path_info;
+fastcgi_param NGINX_REQUEST_TIME $date_gmt;
+fastcgi_param SERVER_NAME $my_server_name;
+
+include fastcgi_params;
+
+# These are set in http.magerunmaps
+fastcgi_param MAGE_DEBUG_SHOW_ARGS $MAGE_DEBUG_SHOW_ARGS;
+fastcgi_param MAGE_MODE $MAGE_MODE;

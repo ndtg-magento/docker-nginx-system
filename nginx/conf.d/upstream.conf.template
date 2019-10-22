@@ -1,0 +1,3 @@
+upstream fastcgi_backend {
+    server ${NGINX_BACKEND_HOST}:${NGINX_BACKEND_PORT}; # backend server:port address
+}
