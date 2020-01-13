@@ -42,4 +42,5 @@ envsubst '${NGINX_BACKEND_HOST} ${NGINX_BACKEND_PORT}' < /etc/nginx/conf.d/upstr
 envsubst '${MAGE_RUN_CODE} ${MAGE_RUN_TYPE} ${MAGE_MODE} ${MAGE_DEBUG_SHOW_ARGS}' \
 	< /etc/nginx/shared/php-fpm.conf.template > /etc/nginx/shared/php-fpm.conf
 
+echo 'Nginx ready to handle connections...'
 exec "nginx" -g "daemon off;"
