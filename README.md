@@ -13,7 +13,7 @@
 - Write `Dockerfile`
 
 ```Dockerfile
-FROM ntuangiang/magento:2.3.3-develop as magento-php-fpm
+FROM ntuangiang/magento:2.3.5-develop as magento-php-fpm
 
 ENV MAGENTO_UPDATE_PACKAGE=true
 ENV DOCUMENT_ROOT=/yourDir
