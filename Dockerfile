@@ -11,4 +11,8 @@ ENV DOCUMENT_ROOT=/usr/share/nginx/html
 
 WORKDIR ${DOCUMENT_ROOT}
 
+COPY --from=ntuangiang/magento:v2.3.5-develop \
+    ${DOCUMENT_ROOT}/ \
+    ${DOCUMENT_ROOT}/
+
 CMD ["/usr/local/bin/docker-nginx-entrypoint"]
