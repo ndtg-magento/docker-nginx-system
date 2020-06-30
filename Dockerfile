@@ -1,3 +1,5 @@
+FROM ntuangiang/magento:develop as magento
+
 FROM nginx:alpine
 
 RUN apk add --no-cache gettext
@@ -11,7 +13,7 @@ ENV DOCUMENT_ROOT=/usr/share/nginx/html
 
 WORKDIR ${DOCUMENT_ROOT}
 
-COPY --from=ntuangiang/magento:develop \
+COPY --from=magento \
     ${DOCUMENT_ROOT}/ \
     ${DOCUMENT_ROOT}/
 
