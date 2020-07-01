@@ -1,6 +1,8 @@
 server {
 
-    listen ${NGINX_BACKEND_LISTEN} ${NGINX_SERVER_NAME};
+    listen ${NGINX_BACKEND_LISTEN};
+
+    server_name ${NGINX_SERVER_NAME};
 
     root ${NGINX_DOCUMENT_ROOT}/pub;
 
