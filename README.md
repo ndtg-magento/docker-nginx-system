@@ -13,7 +13,7 @@
 - Write `Dockerfile`
 
 ```Dockerfile
-FROM ntuangiang/magento:2.3.3-develop as magento-php-fpm
+FROM ntuangiang/magento:2.4.0-develop as magento-php-fpm
 
 ENV MAGENTO_UPDATE_PACKAGE=true
 ENV DOCUMENT_ROOT=/yourDir
@@ -83,7 +83,7 @@ services:
       - traefik
 
   m2php:
-    image: ntuangiang/magento:v2.3.3-develop
+    image: ntuangiang/magento:v2.4.0-develop
     env_file: docker-compose.env
     volumes:
       - ./:/yourDir
