@@ -6,7 +6,8 @@ if ($my_server_name = "") {
     set $my_server_name $http_host;
 }
 
-fastcgi_buffers 1024 4k;
+fastcgi_buffers 16 16k;
+fastcgi_buffer_size 32k;
 fastcgi_read_timeout 600s;
 fastcgi_connect_timeout 600s;
 

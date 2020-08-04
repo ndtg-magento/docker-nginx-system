@@ -17,6 +17,11 @@ server {
     add_header "X-UA-Compatible" "IE=Edge";
     add_header "X-Magento-Debug" "1";
 
+    # Deny access to sensitive files
+    location /.user.ini {
+        deny all;
+    }
+
     # PHP entry point for setup application
     location ~* ^/setup($|/) {
         root ${NGINX_DOCUMENT_ROOT};
@@ -59,7 +64,7 @@ server {
     }
 
     location /pub/ {
-        location ~ ^/pub/media/(downloadable|customer|import|theme_customization/.*\.xml) {
+        location ~ ^/pub/media/(downloadable|customer|import|custom_options|theme_customization/.*\.xml) {
             deny all;
         }
         alias ${NGINX_DOCUMENT_ROOT}/pub/;
@@ -132,6 +137,11 @@ server {
     location /media/import/ {
         deny all;
     }
+
+    location /media/custom_options/ {
+        deny all;
+    }
+
     location /errors/ {
         location ~* \.xml$ {
             deny all;
