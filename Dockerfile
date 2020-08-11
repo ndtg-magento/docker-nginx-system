@@ -9,6 +9,18 @@ COPY ./nginx/docker-nginx-entrypoint /usr/local/bin/docker-nginx-entrypoint
 
 ENV DOCUMENT_ROOT=/usr/share/nginx/html
 
+# Create a user group 'xyzgroup'
+RUN addgroup -S magento
+
+# Create a user 'appuser' under 'xyzgroup'
+RUN adduser -SD magento magento
+
+RUN chown -R magento:magento ${DOCUMENT_ROOT}/
+
+# Necessary steps to avoid permission errors
+RUN touch /var/run/nginx.pid \
+ && chown -R magento:magento /var/run/nginx.pid /var/cache/nginx
+
 WORKDIR ${DOCUMENT_ROOT}
 
 CMD ["/usr/local/bin/docker-nginx-entrypoint"]
