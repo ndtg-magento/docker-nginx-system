@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-RUN apk add --no-cache gettext
+RUN apk add --no-cache gettext zip unzip
 
 COPY ./nginx/conf.d /etc/nginx/conf.d
 COPY ./nginx/shared /etc/nginx/shared
@@ -8,6 +8,8 @@ COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/docker-nginx-entrypoint /docker-entrypoint.d/docker-nginx-entrypoint.sh
 
 ENV DOCUMENT_ROOT=/usr/share/nginx/html
+
+ENV ZIP_ROOT=/usr/share/nginx
 
 # Create a user group 'xyzgroup'
 RUN addgroup -S magento
