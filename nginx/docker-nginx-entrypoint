@@ -9,6 +9,10 @@ if [ -z "${NGINX_DOCUMENT_ROOT}" ]; then
 		export NGINX_DOCUMENT_ROOT="/usr/share/nginx/html"
 fi
 
+if [ -z "${NGINX_BACKEND_HOST}" ]; then
+		export NGINX_BACKEND_HOST=127.0.0.1
+fi
+
 if [ -z "${NGINX_BACKEND_PORT}" ]; then
 		export NGINX_BACKEND_PORT=9000
 fi
